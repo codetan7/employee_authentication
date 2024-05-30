@@ -4,7 +4,7 @@ import './App.css';
 const uuid = require('uuid');
 
 function App() {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null); //react hook
   const [uploadResultMessage, setUploadResultMessage] = useState("For entering the premises, please upload the visitor's image for authentication.");
   const [visitorImgName, setVisitorImgName] = useState('placeholderImage.jpeg');
   const [isAuth, setAuth] = useState(false);
