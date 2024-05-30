@@ -1,0 +1,109 @@
+/* App.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f4f4f9, #e0e0e0);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .App {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  h4 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  input[type='file'] {
+    display: block;
+    margin: 0 auto 10px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  input[type='file']:focus {
+    border-color: #4CAF50;
+    outline: none;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+  }
+  
+  button:active {
+    background-color: #3e8e41;
+    transform: translateY(0);
+  }
+  
+  .Success {
+    color: #4CAF50;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  .Failure {
+    color: #f44336;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  img {
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  img:hover {
+    transform: scale(1.05);
+  }
