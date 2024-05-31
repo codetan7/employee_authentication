@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# Employee Authentication System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+The Employee Authentication System is a web application that allows users to upload an image for authentication purposes. The application uses AWS S3 for storing images and an AWS Lambda function (accessed via API Gateway) for authenticating the uploaded images. The system provides feedback on whether the uploaded image corresponds to an authorized employee.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Upload an image for authentication.
+- Store the uploaded image in an AWS S3 bucket.
+- Authenticate the uploaded image using an AWS Lambda function.
+- Display a success or failure message based on the authentication result.
+- Display the uploaded image on the interface.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technologies Used
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React
+- AWS S3
+- AWS Lambda
+- AWS API Gateway
+- AWS Rekognition
+- AWS DynamoDB
 
-### `npm test`
+## Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js and npm installed
+- AWS account with S3 and Lambda configured
+- AWS SDK for JavaScript
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/codetan7/employee_authentication.git
+   cd employee-authentication-system
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Configure AWS credentials in `App.js`:
+   ```javascript
+   AWS.config.update({
+     accessKeyId: 'YOUR_ACCESS_KEY_ID', 
+     secretAccessKey: 'YOUR_SECRET_ACCESS_KEY', 
+     region: 'YOUR_AWS_REGION'
+   });
+   ```
 
-### `npm run eject`
+4. Update the S3 bucket name in `App.js`:
+   ```javascript
+   const params = {
+     Bucket: 'YOUR_BUCKET_NAME',
+     Key: `${visitorImageName}.jpeg`,
+     Body: image,
+     ContentType: 'image/jpeg'
+   };
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+5. Update the API Gateway URL in `App.js`:
+   ```javascript
+   const requestUrl = `https://YOUR_API_GATEWAY_URL/employee?` + new URLSearchParams({
+     objectKey: `${visitorImageName}.jpeg`
+   });
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Start the application:
+   ```bash
+   npm start
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. Open your browser and navigate to `http://localhost:3000`.
 
-## Learn More
+3. Use the "Choose File" button to select an image for upload.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. Click the "Verify" button to upload the image and authenticate.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. The application will display a message indicating whether the authentication was successful or not.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Customization
 
-### Analyzing the Bundle Size
+- **Styling**: Modify `App.css` to change the appearance of the application.
+- **AWS Configuration**: Update the AWS credentials and S3 bucket name in `App.js`.
+- **API Gateway**: Ensure the API Gateway URL is correctly set in `App.js`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Security
 
-### Making a Progressive Web App
+- **Credentials**: Do not hardcode AWS credentials in the source code for production. Use environment variables or AWS IAM roles.
+- **HTTPS**: Ensure that the API Gateway URL uses HTTPS for secure communication.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
