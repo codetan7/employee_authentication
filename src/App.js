@@ -1,35 +1,32 @@
 import { useState } from 'react';
-import AWS from 'aws-sdk'
+import AWS from 'aws-sdk';
 import './App.css';
 const uuid = require('uuid');
 
 function App() {
-  const [image, setImage] = useState(null); //react hook
+  const [image, setImage] = useState(null);
   const [uploadResultMessage, setUploadResultMessage] = useState("For entering the premises, please upload the visitor's image for authentication.");
   const [visitorImgName, setVisitorImgName] = useState('placeholderImage.jpeg');
   const [isAuth, setAuth] = useState(false);
   const s3 = new AWS.S3();
 
   async function sendImage(e) {
-
-  
     e.preventDefault();
     if (!image) {
       setUploadResultMessage('Please select an image to upload.');
       return;
     }
 
-    const visitorImageName = uuid.v4(); // Use the image name without extension
+    const visitorImageName = uuid.v4();
     const params = {
-      Bucket: 'visitors-img', // Replace with your actual bucket name
-      Key: `${visitorImageName}.jpeg`, // The name of the file to be saved in S3
-      Body: image, // The file object
-      ContentType: 'image/jpeg' // The MIME type of the file
+      Bucket: 'visitors-img',
+      Key: `${visitorImageName}.jpeg`,
+      Body: image,
+      ContentType: 'image/jpeg'
     };
     setVisitorImgName(image.name);
 
     try {
-
       try {
         const uploadResponse = await s3.upload(params).promise();
         console.log('Upload Success', uploadResponse);
@@ -39,7 +36,6 @@ function App() {
         setUploadResultMessage('Image upload failed.');
       }
 
-      // Authenticate the visitor
       const response = await authenticate(visitorImageName);
       if (response.Message === 'Success') {
         setAuth(true);
@@ -64,7 +60,7 @@ function App() {
         method: 'GET',
         headers: {
           "Content-Type": "application/json"
-          }
+        }
       });
 
       if (!response.ok) {
@@ -81,16 +77,33 @@ function App() {
 
   return (
     <div className="App">
-      <h4>Industry Employee Authentication System</h4>
-      <form onSubmit={sendImage}>
-        <input type='file' name='image' onChange={e => setImage(e.target.files[0])} />
-        <button type='submit'>Verify</button>
+      <h4 className="title">Employee Authentication System</h4>
+      <form className="upload-form" onSubmit={sendImage}>
+        <div className="file-input-wrapper">
+          <button className="file-input">Choose File</button>
+          <input
+            type="file"
+            name="image"
+            className="file-input-hidden"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+        </div>
+        <br>
+        </br>
+        <button type="submit" className="verify-button">Verify</button>
       </form>
-      <div className={isAuth ? 'Success' : 'Failure'}>{uploadResultMessage}</div>
-      <img src={require(`./visitors/${visitorImgName}`)} alt="Visitor" height={250} width={250} />
+      <div className={isAuth ? 'result-message success' : 'result-message failure'}>
+        {uploadResultMessage}
+      </div>
+      <br>
+      </br>
+      <img
+        src={require(`./visitors/${visitorImgName}`)}
+        alt="Visitor"
+        className="visitor-image"
+      />
     </div>
   );
-
 }
 
 export default App;
